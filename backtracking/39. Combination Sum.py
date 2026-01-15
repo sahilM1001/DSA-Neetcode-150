@@ -18,24 +18,29 @@
 # Output: [[2,2,2,2],[2,3,3],[3,5]]
 
 # Approach
+# goal here is to create combinations which reach a target, a single number can be used multiple times
 
 class Solution:
     def combinationSum(self, candidates, target):
-        res = []
-        curr = []
+        res = [] # init ans array
+        curr = [] # init current ans array
         def backtrack(index):
-            if sum(curr) == target:
+            if sum(curr) == target: # if current sum == target, append current array to ans and stop recursion
                 res.append(curr.copy())
                 return 
-            if sum(curr) > target:
+            if sum(curr) > target: # if sum(curr) > target, stop recursion as this path is not good to explore
                 return
-            if index == len(candidates):
+            if index == len(candidates): # if we reach end of candidates arr return and stop recursion
                 return
             if sum(curr) + candidates[index] <= target:
+                # if sum(curr) + candidates[index] <= target, this is a valid path to explore
+                # so we append it to current array and go deeper to explore it
                 curr.append(candidates[index])
                 backtrack(index)
+                # finally pop the current number from current array 
                 curr.pop()
+            # explore recursion path for not picking current number 
             backtrack(index+1)
-        backtrack(0)
+        backtrack(0) # call backtracking function first time with 0 index
         return res
         

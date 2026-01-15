@@ -13,23 +13,29 @@
 # Output: [[1]]
 
 # Approach
-
+# goal is to generate all permutations of a number array, Permutations != subsets
 class Solution:
     def permute(self, nums) :
-        self.res = []
-        self.backtrack([], nums, [False] * len(nums))
+        self.res = [] # create ans array
+        # call external backtrack function with empty perms array, entire nums array, and a boolean array for nums
+        self.backtrack([], nums, [False] * len(nums)) 
         return self.res
 
 
     def backtrack(self, perm, nums, pick):
         if len(perm) == len(nums):
+            # if the len of permutation array = len input nums array, we've create a valid permutation 
+            # so append it to res and return to stop the recursion
             self.res.append(perm[:])
             return
         for i in range(len(nums)):
-            if not pick[i]:
+            # run loop over nums
+            if not pick[i]: 
+                # if number is not picked up already, 
+                # append it to permutation array
                 perm.append(nums[i])
-                pick[i] = True
-                self.backtrack(perm, nums, pick)
-                perm.pop()
-                pick[i] = False
+                pick[i] = True # mark pick[i] as true to avoid reusing it
+                self.backtrack(perm, nums, pick) # call backtracking with new perm with current num, nums array, and modified pick array with current num marked true
+                perm.pop() # pop the latest num from perm
+                pick[i] = False # make pick i false so the number can be used again in later calls
         
